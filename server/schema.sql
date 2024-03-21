@@ -66,3 +66,19 @@ ALTER TABLE features ADD FOREIGN KEY (product_id) REFERENCES product (id);
 ALTER TABLE photos ADD FOREIGN KEY (styles_id) REFERENCES styles (id);
 ALTER TABLE skus ADD FOREIGN KEY (styles_id) REFERENCES styles (id);
 ALTER TABLE related ADD FOREIGN KEY (product_id) REFERENCES product (id);
+
+
+\copy product(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
+
+-- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
+
+-- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
+
+-- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
+
+-- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
+
+-- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
+
+
+
