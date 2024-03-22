@@ -1,0 +1,1 @@
+exports.products = require('./product.js');

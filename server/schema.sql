@@ -1,10 +1,17 @@
+
 DROP DATABASE IF EXISTS sdc;
+
 
 CREATE DATABASE sdc;
 
 \c sdc;
 
-DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS product CASCADE;
+DROP TABLE IF EXISTS styles CASCADE;
+DROP TABLE IF EXISTS related CASCADE;
+DROP TABLE IF EXISTS features CASCADE;
+DROP TABLE IF EXISTS photos CASCADE;
+DROP TABLE IF EXISTS skus CASCADE;
 
 CREATE TABLE product (
   id SERIAL PRIMARY KEY,
@@ -15,26 +22,20 @@ CREATE TABLE product (
   default_price INTEGER
 );
 
-DROP TABLE IF EXISTS styles;
-
 CREATE TABLE styles (
   id SERIAL PRIMARY KEY,
   product_id INTEGER,
   name VARCHAR(255),
   original_price INTEGER,
   sale_price INTEGER,
-  default_value BOOLEAN
+  default_style BOOLEAN
 );
-
-DROP TABLE IF EXISTS related;
 
 CREATE TABLE related (
   id SERIAL PRIMARY KEY,
-  product_id INTEGER,
+  current_product_id INTEGER,
   related_product_id INTEGER
 );
-
-DROP TABLE IF EXISTS features;
 
 CREATE TABLE features (
   id SERIAL PRIMARY KEY,
@@ -43,42 +44,34 @@ CREATE TABLE features (
   value VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS photos;
-
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
-  styles_id INTEGER,
-  thumbnail_url VARCHAR(1000),
-  url VARCHAR(1000)
+  styleid INTEGER,
+  url VARCHAR,
+  thumbnail_url VARCHAR
 );
-
-DROP TABLE IF EXISTS skus;
 
 CREATE TABLE skus (
   id SERIAL PRIMARY KEY,
-  styles_id INTEGER,
-  quantity INTEGER,
-  size VARCHAR(10)
+  styleid INTEGER,
+  size VARCHAR(10),
+  quantity INTEGER
 );
 
-ALTER TABLE styles ADD FOREIGN KEY (product_id) REFERENCES product (id);
-ALTER TABLE features ADD FOREIGN KEY (product_id) REFERENCES product (id);
-ALTER TABLE photos ADD FOREIGN KEY (styles_id) REFERENCES styles (id);
-ALTER TABLE skus ADD FOREIGN KEY (styles_id) REFERENCES styles (id);
-ALTER TABLE related ADD FOREIGN KEY (product_id) REFERENCES product (id);
+ALTER TABLE styles ADD FOREIGN KEY (product_id) REFERENCES product(id);
+ALTER TABLE features ADD FOREIGN KEY (product_id) REFERENCES product(id);
+ALTER TABLE photos ADD FOREIGN KEY (styleid) REFERENCES styles(id);
+ALTER TABLE skus ADD FOREIGN KEY (styleid) REFERENCES styles(id);
+ALTER TABLE related ADD FOREIGN KEY (product_id) REFERENCES product(id);
+
+\copy product(id, name, slogan, description, category, default_price) FROM 'server/data/product.csv' DELIMITER ',' CSV HEADER;
+\copy styles(id, product_id, name, original_price, sale_price, default_style) FROM 'server/data/styles.csv' DELIMITER ',' CSV HEADER;
+\copy related(id, current_product_id, related_product_id) FROM 'server/data/related.csv' DELIMITER ',' CSV HEADER;
+\copy photos(id, styleid, url, thumbnail_url) FROM 'server/data/photos.csv' DELIMITER ',' CSV HEADER;
+\copy features(id, product_id, feature, value) FROM 'server/data/features.csv' DELIMITER ',' CSV HEADER;
+\copy skus(id, styleid, size, quantity) FROM 'server/data/skus.csv' DELIMITER ',' CSV HEADER;
 
 
-\copy product(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
-
--- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
-
--- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
-
--- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
-
--- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
-
--- \copy styles(id, name, slogan, description, category, default_price) FROM '/home/james/SeniorPhaseHR/Product-API/server/data/product.csv' DELIMITER ',' CSV HEADER
 
 
 
