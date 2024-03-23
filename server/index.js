@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -13,12 +14,13 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
-})
+});
 
 app.get('/', (req, res) => {
   res.end("hello from server");
-})
+});
 
 app.get('/products', productController.getAll);
 app.get('/products/:id', productController.getOne);
-app.get('/related/:id', productController.getRelated);
+app.get('/products/:id/related', productController.getRelated);
+app.get('/products/:id/styles', productController.getStyles);

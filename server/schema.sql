@@ -1,6 +1,4 @@
-
 DROP DATABASE IF EXISTS sdc;
-
 
 CREATE DATABASE sdc;
 
@@ -63,6 +61,11 @@ ALTER TABLE features ADD FOREIGN KEY (product_id) REFERENCES product(id);
 ALTER TABLE photos ADD FOREIGN KEY (styleid) REFERENCES styles(id);
 ALTER TABLE skus ADD FOREIGN KEY (styleid) REFERENCES styles(id);
 ALTER TABLE related ADD FOREIGN KEY (product_id) REFERENCES product(id);
+
+CREATE INDEX idx_styles_product_id ON styles (product_id);
+CREATE INDEX idx_photos_styleid ON photos (styleid);
+CREATE INDEX idx_skus_styleid ON skus (styleid);
+CREATE INDEX idx_related_id ON related (current_product_id);
 
 \copy product(id, name, slogan, description, category, default_price) FROM 'server/data/product.csv' DELIMITER ',' CSV HEADER;
 \copy styles(id, product_id, name, original_price, sale_price, default_style) FROM 'server/data/styles.csv' DELIMITER ',' CSV HEADER;
