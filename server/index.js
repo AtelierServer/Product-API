@@ -4,11 +4,13 @@ const morgan = require('morgan');
 const cors = require('cors');
 const db = require('./db.js');
 const productController = require('./controllers/index.js');
+const path = require("path");
 
 const app = express();
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'))
 
 const port = process.env.PORT || 3000;
 
