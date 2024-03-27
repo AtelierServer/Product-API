@@ -14,30 +14,30 @@ module.exports = {
     }
   },
 
-  getOneFeatures: async function(params) {
-    try {
-      const query = 'SELECT * FROM features WHERE product_id = $1'
-      const res = await db.query(query, params);
-      // return res.rows
-      const features = res.rows.map(feature => {
-        return {feature: feature.feature, value: feature.value};
-      });
-      return features;
-    } catch (err) {
-      console.log("error inside getOne model", err);
-      throw err;
-    }
-  },
+  // getOneFeatures: async function(params) {
+  //   try {
+  //     const query = 'SELECT * FROM features WHERE product_id = $1'
+  //     const res = await db.query(query, params);
+  //     // return res.rows
+  //     const features = res.rows.map(feature => {
+  //       return {feature: feature.feature, value: feature.value};
+  //     });
+  //     return features;
+  //   } catch (err) {
+  //     console.log("error inside getOne model", err);
+  //     throw err;
+  //   }
+  // },
   getOne: async function(params) {
     try {
-      const query = 'SELECT * FROM product WHERE id = $1'
-      const res = await db.query(query, params);
-     return res.rows;
-      console.log("resrows, getOne", res.rows);
+    // const query = "SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, COALESCE(JSON_AGG(JSON_BUILD_OBJECT('feature', f.feature, 'value', f.value)) FILTER (WHERE f.feature IS NOT NULL AND f.value IS NOT NULL), '[]') AS features FROM product p LEFT JOIN features f ON p.id = f.product_id WHERE p.id = $1 GROUP BY p.id, p.name;"
+    const query = "SELECT * from product where id = $1"
+    const res = await db.query(query, params)
+    return res.rows;
     } catch (err) {
-      console.log("error inside getOne model", err);
-      throw err;
+      console.log(err);
     }
+
   },
   getRelated: async function(params) {
     try {
