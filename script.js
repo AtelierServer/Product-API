@@ -56,6 +56,6 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function() {
-  http.get('http://localhost:3000/products');
+  http.get('http://localhost:5000/products');
   sleep(1);
 }

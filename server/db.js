@@ -7,7 +7,7 @@ const pool = new Pool({
   host: process.env.HOST,
   port: process.env.PGPORT,
   database: process.env.PGDB,
-  max: 20,
+  max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 20000,
 });

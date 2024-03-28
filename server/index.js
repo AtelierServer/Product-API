@@ -5,12 +5,16 @@ const cors = require('cors');
 const db = require('./db.js');
 const productController = require('./controllers/index.js');
 const path = require("path");
+const apicache = require('apicache');
+
+let cache = apicache.middleware;
 
 const app = express();
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(cache('30 seconds'))
 
 const port = process.env.PORT || 3000;
 
